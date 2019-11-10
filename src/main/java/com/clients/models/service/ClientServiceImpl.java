@@ -25,4 +25,22 @@ public class ClientServiceImpl implements IClientService {
 		return (List<Client>) this.iClientDao.findAll();
 	}
 
+	@Override
+	@Transactional
+	public Client save(Client client) {
+		return this.iClientDao.save(client);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		this.iClientDao.deleteById(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Client findById(Long id) {
+		return this.iClientDao.findById(id).orElse(null);
+	}
+
 }
