@@ -12,6 +12,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,10 +35,16 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty
+	@Size(min = 2, max = 12)
 	@Column(nullable = false)
 	private String name;
+	
+	@NotEmpty
 	private String surname;
 	
+	@Email(message = "escribi bien el email gato")
+	@NotEmpty
 	@Column(nullable = false, unique = true)
 	private String email;
 

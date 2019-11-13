@@ -3,11 +3,15 @@ package com.clients.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,10 +65,18 @@ public class ClientRestController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> saveClient(@RequestBody Client client) {
+	public ResponseEntity<?> saveClient(@Valid @RequestBody Client client, BindingResult result) {
 		
 		Client clientNew = null;
 		Map<String, Object> response = new HashMap<>();
+		
+		if(result.hasErrors()) {
+			response.put("errors", result.getFieldErrors()
+					.stream()
+					.map(e -> "Field '" + e.getField() + "' " + e.getDefaultMessage())
+					.collect(Collectors.toList()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		}
 		
 		try {
 			clientNew = this.iClientService.save(client);
@@ -82,10 +94,18 @@ public class ClientRestController {
 
 	@PutMapping("{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> updateClient(@RequestBody Client client, @PathVariable Long id) {
+	public ResponseEntity<?> updateClient(@Valid @RequestBody Client client, @PathVariable Long id, BindingResult result) {
 
 		Client currentClient = null;
 		Map<String, Object> response = new HashMap<>();
+		
+		if(result.hasErrors()) {
+			response.put("errors", result.getFieldErrors()
+					.stream()
+					.map(e -> "Field '" + e.getField() + "' " + e.getDefaultMessage())
+					.collect(Collectors.toList()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		}
 	
 		currentClient =	this.iClientService.findById(id);
 
