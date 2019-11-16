@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -39,6 +41,11 @@ public class ClientRestController {
 	@GetMapping
 	public List<Client> getClients() {
 		return this.iClientService.findAll();
+	}
+	
+	@GetMapping("page/{page}")
+	public Page<Client> getClients(@PathVariable Integer page) {
+		return this.iClientService.findAll(PageRequest.of(page, 5));
 	}
 
 	@GetMapping("id/{id}")
