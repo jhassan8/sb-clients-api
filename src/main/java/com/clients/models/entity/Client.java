@@ -52,6 +52,8 @@ public class Client implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 
+	private String avatar;
+	
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
