@@ -239,8 +239,16 @@ public class ClientRestController {
 			e.printStackTrace();
 		}
 		
-		if(!resouce.exists()) 
-			throw new RuntimeException("error on load image " + avatar);
+		if(!resouce.exists()) {
+			uploadsPath = Paths.get("src/main/resources/static/imgs/no-user.png").resolve("no-user.png").toAbsolutePath();
+			try {
+				resouce = new UrlResource(uploadsPath.toUri());
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+			
+			logger.error("error on load image " + avatar);
+		}
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment: filename=\"" + avatar + "\"");
