@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -59,9 +60,10 @@ public class Client implements Serializable {
 
 	private String avatar;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "district_id")
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@NotNull(message = "the district cant be null")
 	private District district;
 	
 	@PrePersist

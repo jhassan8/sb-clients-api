@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.clients.models.dao.IClientDao;
 import com.clients.models.entity.Client;
+import com.clients.models.entity.District;
 
 @Service
 public class ClientServiceImpl implements IClientService {
@@ -49,6 +50,12 @@ public class ClientServiceImpl implements IClientService {
 	@Transactional(readOnly = true)
 	public Client findById(Long id) {
 		return this.iClientDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<District> findAllDistricts() {
+		return this.iClientDao.findAllDistricts();
 	}
 
 }

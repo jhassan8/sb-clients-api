@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.clients.models.entity.Client;
+import com.clients.models.entity.District;
 
 public interface IClientService {
 
@@ -18,5 +19,7 @@ public interface IClientService {
 	public void delete(Long id);
 
 	public Client findById(Long id);
+
+	public List<District> findAllDistricts();
 
 }

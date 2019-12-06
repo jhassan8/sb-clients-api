@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.clients.models.entity.Client;
+import com.clients.models.entity.District;
 import com.clients.models.service.IClientService;
 import com.clients.models.service.IUploadFileService;
 
@@ -131,6 +132,7 @@ public class ClientRestController {
 			currentClient.setEmail(client.getEmail());
 			currentClient.setName(client.getName());
 			currentClient.setSurname(client.getSurname());
+			currentClient.setDistrict(client.getDistrict());
 
 			currentClient = this.iClientService.save(currentClient);
 		} catch (DataAccessException e) {
@@ -213,5 +215,11 @@ public class ClientRestController {
 
 		return new ResponseEntity<Resource>(resouce, headers, HttpStatus.OK);
 	}
+	
+	@GetMapping("/districts")
+	public List<District> getDistricts() {
+		return this.iClientService.findAllDistricts();
+	}
+
 
 }
