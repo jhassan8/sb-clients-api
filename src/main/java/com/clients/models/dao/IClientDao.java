@@ -10,7 +10,7 @@ import com.clients.models.entity.District;
 
 public interface IClientDao extends JpaRepository<Client, Long> {
 	
-	@Query("from districts")
+	@Query("from District")
 	public List<District> findAllDistricts();
 
 }
